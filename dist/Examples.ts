@@ -82,10 +82,10 @@ Logger.log(doc.getUrl());
 
 // In this case, we could write the fully qualified type:
 
-const doc: GoogleAppsScript.Document.Document = DocumentApp.create('Hello, world!');
+const doc1: GoogleAppsScript.Document.Document = DocumentApp.create('Hello, world!');
 
 // Or inferred type:
 
-const doc = DocumentApp.create('Hello, world!');
+const doc2 = DocumentApp.create('Hello, world!');
 
 // In most cases, the inferred type is sufficient for Apps Script autocompletion.
