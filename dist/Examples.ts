@@ -73,3 +73,19 @@ class Test {
 }
 let t = new Test();
 console.log(t.name); // 'test'
+
+// After installing @types/google-apps-script, editors like Visual Studio Code autocomplete types:
+
+var doc = DocumentApp.create('Hello, world!');
+doc.getBody().appendParagraph('This document was created by Google Apps Script.');
+Logger.log(doc.getUrl());
+
+// In this case, we could write the fully qualified type:
+
+const doc: GoogleAppsScript.Document.Document = DocumentApp.create('Hello, world!');
+
+// Or inferred type:
+
+const doc = DocumentApp.create('Hello, world!');
+
+// In most cases, the inferred type is sufficient for Apps Script autocompletion.
