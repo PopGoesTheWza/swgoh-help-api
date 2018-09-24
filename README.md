@@ -1,6 +1,8 @@
-# Google Apps Script
+# SWGoH.help API client for GAS
 
-Use the Apps Script Starter kit to quickly build Google add-ons and web applications with next-generation JavaScript.
+Google Apps Script client wrapper for the [SWGoH.help](https://api.swgoh.help/swgoh) API
+
+For API access and support, please visit us on [Discor](https://discord.gg/kau4XTB)
 
 ## Getting Started
           

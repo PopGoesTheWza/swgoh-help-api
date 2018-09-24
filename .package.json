@@ -1,13 +1,13 @@
 {
-  "name": "ts-apps-script-starter",
+  "name": "gas-swgoh-help-api",
   "version": "1.0.0",
-  "description": "A starter kit for creating Google Apps Script project with TypeScript",
+  "description": "SWGoH.help API client for GAS",
   "author": {
     "name": "Guillaume Contesso",
     "email": "popgoesthewza@gmail.com",
-    "url": "http://hell.com/"
+    "url": "https://discord.gg/ywzJEaQ"
   },
-  "homepage": "http://hell.com/",
+  "homepage": "https://discord.gg/ywzJEaQ",
   "license": "MIT",
   "main": "dist/Code.ts",
   "scripts": {
@@ -15,14 +15,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/labnol/apps-script-starter.git"
+    "url": "git+https://github.com/PopGoesTheWza/swgoh-help-api.git"
   },
   "keywords": [
     "google-apps-script",
     "gas",
-    "gsuite",
-    "apps-script",
-    "typescript"
+    "star wars",
+    "swgoh"
   ],
   "dependencies": {},
   "devDependencies": {
