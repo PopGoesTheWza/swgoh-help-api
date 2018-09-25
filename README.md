@@ -41,6 +41,7 @@ This client is powered by
 ![alt text](https://www.swgoh.help/img/logo.png "swgoh.help")
 
 Consider donating to its [Patreon](https://www.patreon.com/user?u=470177)
+
 > Help us continue to scale and support more players across a wider range of tools! Every dollar helps us to boost resources and increase stability. Your donation will help ensure a continued data stream for your favourite swgoh tools.
 
 ## Build your own copy
