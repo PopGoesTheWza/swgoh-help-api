@@ -28,6 +28,17 @@ class SwgohHelpApiClient {
 
   private readonly tokenId: string
 
+  // private get token() {
+  //   const cache = CacheService.getScriptCache()
+  //   const token = cache.get(this.tokenId) || this.login()
+  //   return token
+  // }
+  
+  // private set token(token: string) {
+  //   const cache = CacheService.getScriptCache()
+  //   cache.put(this.tokenId, token, 3600)
+  // }
+  
   private getToken() {
     const cache = CacheService.getScriptCache()
     const token = cache.get(this.tokenId) || this.login()
@@ -88,44 +99,29 @@ class SwgohHelpApiClient {
       muteHttpExceptions: true,
     })
     
-    // const debug_response = {
-    //   getResponseCode: response.getResponseCode(),
-    //   getContentText: response.getContentText().split("\n")
-    // }
     if (response.getResponseCode() === 200 ) {
       const token = JSON.parse(response.getContentText())
+      // this.token = token.access_token  // token.expires_in
       this.setToken(token.access_token)  // token.expires_in
     } else {
       throw new Error('! Cannot login with these credentials')
     }
     
+    // return this.token
     return this.getToken()
   }
 
   protected fetchAPI(url: string, payload) {
-    // const debug_params = {
-    //   contentType: 'application/json',
-    //   headers: {
-    //     Authorization: `Bearer ${this.getToken()}`
-    //   },
-    //   method: 'post',
-    //   payload: JSON.stringify(payload),
-    //   muteHttpExceptions: true
-    // }
     const response = UrlFetchApp.fetch(url, {
       contentType: 'application/json',
       headers: {
+        // Authorization: `Bearer ${this.token}`
         Authorization: `Bearer ${this.getToken()}`
       },
       method: 'post',
       payload: JSON.stringify(payload),
       muteHttpExceptions: true
     })
-    // const debug_response = {
-    //   getResponseCode: response.getResponseCode(),
-    //   getContentText: response.getContentText().split("\n")
-    // }
-    // debugger
 
     if (response.getResponseCode() === 200 ) {
       return JSON.parse(response.getContentText())
