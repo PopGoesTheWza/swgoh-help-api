@@ -13,8 +13,8 @@ Within you Google document
 ```javascript
 function Test() {
   var settings = {
-     username: "PopGoesTheWza",
-     password: "y7wX-wKYbV4^C$NF"
+     username: "???",
+     password: "???"
   };
   var client = new swgohhelpapi.module.exports.SwgohHelpApiClient(settings);
   var allycodes = [213176142, "524-173-817"];
