@@ -6,7 +6,34 @@ For API access and support, please visit us on [Discord](https://discord.gg/kau4
 
 ## Getting Started
 
-Within you Google document, add the script library by using this ID `1bMXMdwJmhTBxb4tBMEyEtw3jPVTzMZQz6NZ9Wm5-5b2MPWWFfqJVGa6n`
+Within you Google document
+1. open  the menu `Resources` and the option `Libraries...`
+1. add the library by using this ID `1bMXMdwJmhTBxb4tBMEyEtw3jPVTzMZQz6NZ9Wm5-5b2MPWWFfqJVGa6n` and selecting the latest version
+1. use the following snippet for simple testing
+```javascript
+function Test() {
+  var settings = {
+     username: "PopGoesTheWza",
+     password: "y7wX-wKYbV4^C$NF"
+  };
+  var client = new swgohhelpapi.module.exports.SwgohHelpApiClient(settings);
+  var allycodes = [213176142, "524-173-817"];
+  var json = client.fetchPlayer({
+    allycodes: allycodes,
+    project: {
+      allyCode: true,
+      name: true,
+      level: false,
+      guildName: false,
+      stats: false,
+      roster: false,
+      arena: false,
+      updated: true
+    }
+  }); // formated string allycode
+  debugger
+}
+```
 
 ## Build your own copy
 
