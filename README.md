@@ -2,7 +2,7 @@
 
 Google Apps Script client wrapper for the [SWGoH.help](https://api.swgoh.help/swgoh) API
 
-For API access and support, please visit us on [Discor](https://discord.gg/kau4XTB)
+For API access and support, please visit us on [Discord](https://discord.gg/kau4XTB)
 
 ## Getting Started
 
