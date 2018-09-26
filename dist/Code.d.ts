@@ -1,4 +1,4 @@
-interface Settings {
+interface SwgohHelpApiSettings {
   readonly username: string
   readonly password: string
   readonly client_id?: string
@@ -13,37 +13,37 @@ interface PlayerPayload {
   language?: string  // Optional language to return translated names. If no language specified, no translations will be applied
   enums?: boolean  // Optionally return enumerated items as their string equivalents
   project?: {  // Optional projection of object keys (first layer) you want returned
-    allyCode?: number
-    name?: number
-    level?: number
-    guildName?: number
-    stats?: number
-    roster?: number
-    arena?: number
-    updated?: number
+    allyCode?: boolean
+    name?: boolean
+    level?: boolean
+    guildName?: boolean
+    stats?: boolean
+    roster?: boolean
+    arena?: boolean
+    updated?: boolean
   } 
 }
 
 interface GuildPayload {
-  allycode: number  // Allycode of any guild member in guild to request.
+  allycode: number | string  // Allycode of any guild member in guild to request.
   language?: string  // Optional language to return translated names. If no language specified, no translations will be applied
   enums?: boolean  // Optionally return enumerated items as their string equivalents
   roster?: boolean  // Optionally replace guild roster with full array of player profiles
   units?: boolean  // (in conjunction with roster) Optionally replace guild roster with guild-wide units-report
   mods?: boolean  // (in conjunction with units) Optionally include unit mods in units-report
   project?: {  // Optional projection of object keys (first layer) you want returned
-    name?: number
-    desc?: number
-    members?: number
-    status?: number
-    required?: number
-    bannerColor?: number
-    banerLogo?: number
-    message?: number
-    gp?: number
-    raid?: number
-    roster?: number
-    updated?: number
+    name?: boolean
+    desc?: boolean
+    members?: boolean
+    status?: boolean
+    required?: boolean
+    bannerColor?: boolean
+    banerLogo?: boolean
+    message?: boolean
+    gp?: boolean
+    raid?: boolean
+    roster?: boolean
+    updated?: boolean
   } 
 }
 
@@ -53,17 +53,17 @@ interface UnitsPayload {
   language?: string  // Optional language to return translated names. If no language specified, no translations will be applied
   enums?: boolean  // Optionally return enumerated items as their string equivalents
   project?: {  // Optional projection of object keys (first layer) you want returned
-    player?: number
-    allyCode?: number
-    starLevel?: number
-    level?: number
-    gearLevel?: number
-    gear?: number
-    zetas?: number
-    type?: number
-    mods?: number
-    gp?: number
-    updated?: number
+    player?: boolean
+    allyCode?: boolean
+    starLevel?: boolean
+    level?: boolean
+    gearLevel?: boolean
+    gear?: boolean
+    zetas?: boolean
+    type?: boolean
+    mods?: boolean
+    gp?: boolean
+    updated?: boolean
   } 
 }
 
@@ -71,14 +71,14 @@ interface EventsPayload {
   language?: string  // Optional language to return translated names. If no language specified, no translations will be applied
   enums?: boolean  // Optionally return enumerated items as their string equivalents
   project?: {  // Optional projection of object keys (first layer) you want returned
-    id?: number
-    priority?: number
-    nameKey?: number
-    summaryKey?: number
-    descKey?: number
-    instances?: number
-    squadType?: number
-    defensiveSquadType?: number
+    id?: boolean
+    priority?: boolean
+    nameKey?: boolean
+    summaryKey?: boolean
+    descKey?: boolean
+    instances?: boolean
+    squadType?: boolean
+    defensiveSquadType?: boolean
   } 
 }
 
@@ -86,11 +86,11 @@ interface BattlesPayload {
   language?: string  // Optional language to return translated names. If no language specified, no translations will be applied
   enums?: boolean  // Optionally return enumerated items as their string equivalents
   project?: {  // Optional projection of object keys (first layer) you want returned
-    id?: number
-    nameKey?: number
-    descriptionKey?: number
-    campaignType?: number
-    campaignMapList?: number
+    id?: boolean
+    nameKey?: boolean
+    descriptionKey?: boolean
+    campaignType?: boolean
+    campaignMapList?: boolean
   } 
 }
 

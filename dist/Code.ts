@@ -15,9 +15,9 @@
  * @customfunction
  */
 
-class SwgohHelpApiClient {
+export class SwgohHelpApiClient {
 
-  private readonly settings: Settings
+  private readonly settings: SwgohHelpApiSettings
   private readonly signin_url: string
   private readonly player_url: string
   private readonly guild_url: string
@@ -50,7 +50,7 @@ class SwgohHelpApiClient {
     cache.put(this.tokenId, token, 3600)
   }
 
-  public constructor(settings: Settings) {
+  public constructor(settings: SwgohHelpApiSettings) {
     const protocol = settings.protocol || "https"
     const host = settings.host || "api.swgoh.help"
     const port = settings.port ? `:${settings.port}` : ''
@@ -135,7 +135,7 @@ class SwgohHelpApiClient {
     if (!(allycodes instanceof Array)) {
       payload.allycodes = [payload.allycodes] as number[]
     }
-    payload.allycodes = payload.allycodes.map( e => {
+    payload.allycodes = (payload.allycodes as any[] ).map( e => {
       if (typeof e === 'string') {
         const m = e.match(/(\d{3})[^\d]*(\d{3})[^\d]*(\d{3})/)
         e = m && Number(`${m[1]}${m[2]}${m[3]}`)
@@ -168,5 +168,3 @@ class SwgohHelpApiClient {
     return this.fetchAPI( this.data_url, payload );
   }
 }
-
-export { SwgohHelpApiClient }
