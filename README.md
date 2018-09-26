@@ -1,4 +1,4 @@
-# SWGoH.help API client for GAS
+# SWGoH.help API client for GAS v1.0.1_beta
 
 Google Apps Script client wrapper for the [SWGoH.help](https://api.swgoh.help/swgoh) API
 
@@ -17,7 +17,7 @@ function Test() {
      password: "???"
   };
   var client = new swgohhelpapi.module.exports.SwgohHelpApiClient(settings);
-  var allycodes = [213176142, "524-173-817"];
+  var allycodes = [213176142];
   var json = client.fetchPlayer({
     allycodes: allycodes,
     project: {
@@ -30,7 +30,7 @@ function Test() {
       arena: false,
       updated: true
     }
-  }); // formated string allycode
+  });
   debugger
 }
 ```

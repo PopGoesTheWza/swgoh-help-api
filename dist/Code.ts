@@ -1,20 +1,19 @@
 /**
- * Returns a SwgohHelp API client.
- *
- * Available methods:
- *
- * client.fetchPlayer(payload)
- * client.fetchGuild(payload)
- * client.fetchUnits(payload)
- * client.fetchEvents(payload)
- * client.fetchBattles(payload)
- * client.fetchData(payload)
- *
- * @param {settings object} settings        A well-formed domain name to resolve.
- * @return {SwgohHelp client}               A SwgohHelp API client.
- * @customfunction
+ * SWGoH.help API client module.
+ * @preferred
  */
 
+/**
+ * API client class.
+ *
+ * Available methods:
+ * - client.fetchPlayer(payload)
+ * - client.fetchGuild(payload)
+ * - client.fetchUnits(payload)
+ * - client.fetchEvents(payload)
+ * - client.fetchBattles(payload)
+ * - client.fetchData(payload)
+ */
 export class SwgohHelpApiClient {
 
   private readonly settings: SwgohHelpApiSettings
@@ -39,17 +38,31 @@ export class SwgohHelpApiClient {
   //   cache.put(this.tokenId, token, 3600)
   // }
   
+  /**
+   * Retrieve the API session token from Google CacheService.
+   * The key is a SHA256 digest of the username and password used to access the API.
+   * Caching period is one hour.
+   * If there is no API session token, one is created by invoking the login() method.
+   */
   private getToken() {
     const cache = CacheService.getScriptCache()
-    const token = cache.get(this.tokenId) || this.login()
+    const token: string = cache.get(this.tokenId) || this.login()
     return token
   }
 
+  /**
+   * Store the API session token into Google CacheService.
+   * The key is a SHA256 digest of the username and password used to access the API.
+   * Caching period is one hour.
+   */
   private setToken(token: string) {
     const cache = CacheService.getScriptCache()
     cache.put(this.tokenId, token, 3600)
   }
 
+  /**
+   * Creates a SWGoH.help API client.
+   */
   public constructor(settings: SwgohHelpApiSettings) {
     const protocol = settings.protocol || "https"
     const host = settings.host || "api.swgoh.help"
@@ -73,10 +86,14 @@ export class SwgohHelpApiClient {
     ))
   }
 
+  /**
+   * Attempts to log into the SWGoH.help API.
+   * @returns A SWGoH.help API session token
+   */
   public login() {
     const params = {
       contentType: 'application/x-www-form-urlencoded',
-      method: 'post',
+      method: 'post' as "post",  // Silly workaround
       payload: {
         username: this.settings.username,
         password: this.settings.password,
@@ -86,23 +103,13 @@ export class SwgohHelpApiClient {
       },
       muteHttpExceptions: true,
     }
-    const response = UrlFetchApp.fetch(this.signin_url, {
-      contentType: 'application/x-www-form-urlencoded',
-      method: 'post',
-      payload: {
-        username: this.settings.username,
-        password: this.settings.password,
-        grant_type: "password",
-        client_id: this.settings.client_id || "anything",
-        client_secret: this.settings.client_secret || "something"
-      },
-      muteHttpExceptions: true,
-    })
+    const response = UrlFetchApp.fetch(this.signin_url, params)
     
     if (response.getResponseCode() === 200 ) {
       const token = JSON.parse(response.getContentText())
-      // this.token = token.access_token  // token.expires_in
-      this.setToken(token.access_token)  // token.expires_in
+      // this.token = token.access_token
+      this.setToken(token.access_token)
+      // Unmanaged: token.expires_in
     } else {
       throw new Error('! Cannot login with these credentials')
     }
@@ -112,16 +119,17 @@ export class SwgohHelpApiClient {
   }
 
   protected fetchAPI(url: string, payload) {
-    const response = UrlFetchApp.fetch(url, {
+    const params = {
       contentType: 'application/json',
       headers: {
         // Authorization: `Bearer ${this.token}`
         Authorization: `Bearer ${this.getToken()}`
       },
-      method: 'post',
+      method: 'post' as "post",  // Silly workaround
       payload: JSON.stringify(payload),
       muteHttpExceptions: true
-    })
+    }
+    const response = UrlFetchApp.fetch(url, params)
 
     if (response.getResponseCode() === 200 ) {
       return JSON.parse(response.getContentText())
@@ -130,11 +138,13 @@ export class SwgohHelpApiClient {
     }
   }
 
+  /**
+   * Fetch Player data
+   */
   public fetchPlayer(payload: PlayerPayload) {
-    const allycodes = payload.allycodes
-    if (!(allycodes instanceof Array)) {
-      payload.allycodes = [payload.allycodes] as number[]
-    }
+    // TODO: is this type checking/fixing really necessary?
+    const acs = payload.allycodes
+    if ( !(acs instanceof Array) ) { payload.allycodes = [acs] as number[] }
     payload.allycodes = (payload.allycodes as any[] ).map( e => {
       if (typeof e === 'string') {
         const m = e.match(/(\d{3})[^\d]*(\d{3})[^\d]*(\d{3})/)
@@ -145,25 +155,40 @@ export class SwgohHelpApiClient {
       return e
     } ).filter( e => typeof e === 'number' && e > 99999999)
 
-    return this.fetchAPI( this.player_url, payload )
+    return this.fetchAPI( this.player_url, payload ) as PlayerObject[]
   }
 
+  /**
+   * Fetch Guild data
+   */
   public fetchGuild(payload: GuildPayload) {
-    return this.fetchAPI( this.guild_url, payload )
+    return this.fetchAPI( this.guild_url, payload ) as GuildObject
   }
 
+  /**
+   * Fetch Units data
+   */
   public fetchUnits(payload: UnitsPayload) {
     return this.fetchAPI( this.units_url, payload )
   }
 
+  /**
+   * Fetch Events data
+   */
   public fetchEvents(payload: EventsPayload) {
     return this.fetchAPI( this.events_url, payload )
   }
 
+  /**
+   * Fetch Battles data
+   */
   public fetchBattles(payload: BattlesPayload) {
     return this.fetchAPI( this.battles_url, payload )
   }
 
+  /**
+   * Fetch Data data
+   */
   public fetchData(payload: DataPayload) {
     return this.fetchAPI( this.data_url, payload );
   }

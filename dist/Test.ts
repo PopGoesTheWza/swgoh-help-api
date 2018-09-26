@@ -1,7 +1,11 @@
 import { SwgohHelpApiClient } from "./Code"
 
+/**
+ * Helper function to instanciate a swgoh.help API client
+ * The `username` and `password`properties should be edited with you swgoh.help API credentials 
+ */
 function client_() {
-  const settings = {
+  const settings: SwgohHelpApiSettings = {
      username: "???",
      password: "???"
   }
@@ -10,10 +14,13 @@ function client_() {
 }
 
 
+/**
+ * Sample invokation of the /swgoh/player endpoint
+ */
 function Test_fetchPlayer() {
   const allycode = 213176142
   const allycodes = [allycode, "524-173-817"]
-  let json
+  let json: PlayerObject[]
   const client = client_()
 
   json = client.fetchPlayer( {
@@ -59,12 +66,16 @@ function Test_fetchPlayer() {
   } )
   json = client.fetchPlayer( { allycodes: allycode } )
   debugger
+  return json
 }
 
 
+/**
+ * Sample invokation of the /swgoh/guild endpoint
+ */
 function Test_fetchGuild() {
   const allycode = 213176142
-  let json
+  let json: GuildObject
   const client = client_()
 
   json = client.fetchGuild( {
@@ -73,9 +84,13 @@ function Test_fetchGuild() {
     enums: false
   } )
   debugger
+  return json
 }
 
 
+/**
+ * Sample invokation of the /swgoh/units endpoint
+ */
 function Test_fetchUnits() {
   const allycode = 213176142
   let json
@@ -90,6 +105,9 @@ function Test_fetchUnits() {
 }
 
 
+/**
+ * Sample invokation of the /swgoh/events endpoint
+ */
 function Test_fetchEvents() {
   let json
   const client = client_()
@@ -102,6 +120,9 @@ function Test_fetchEvents() {
 }
 
 
+/**
+ * Sample invokation of the /swgoh/battles endpoint
+ */
 function Test_fetchBattles() {
   let json
   const client = client_()
@@ -114,6 +135,9 @@ function Test_fetchBattles() {
 }
 
 
+/**
+ * Sample invokation of the /swgoh/data endpoint
+ */
 function Test_fetchData() {
   let json = {}
   const client = client_()
