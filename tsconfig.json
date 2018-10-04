@@ -1,0 +1,29 @@
+{
+  // list all files to process for .d.ts declarations
+  "files": [
+    "src/index.ts",
+  ],
+  "compilerOptions": {
+    // only emit .d.ts
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    // "declarationDir": "dist/@types/swgoh_help_api",
+    
+    "noEmitOnError": true,
+    "outDir": "dist",
+
+    // adapted from https://github.com/grant/ts2gas/blob/master/index.js
+    "lib": ["es2015"],
+    "target": "ES3",
+    "noImplicitUseStrict": true,
+    "noLib": false,  // Note: true in ts2gas
+    "experimentalDecorators": true,
+    "noResolve": false,  // Note: true in ts2gas
+    "pretty": true,
+    "module": "es2015",  // Note: "none" in ts2gas
+    "moduleResolution": "node",
+  },
+  "exclude": [
+    "node_modules",
+  ],
+}

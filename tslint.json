@@ -1,0 +1,4 @@
+{
+  // Use AirBnB coding style
+  "extends": "tslint-config-airbnb"
+}

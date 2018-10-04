@@ -61,4 +61,7 @@ typings/
 .next
 
 .DS_Store
-.secret
+.NOTES
+
+# Messy place that needs cleanup
+src/lib
