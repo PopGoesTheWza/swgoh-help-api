@@ -127,9 +127,9 @@ export class Client {
   }
 
   /** Fetch Data data */
-  public fetchData(payload: DataRequest): AbilityListResponse {
+  public fetchData(payload: any): any {
     // TODO proper interface
-    return this.fetchAPI<AbilityListResponse>(this.dataUrl, payload);
+    return this.fetchAPI<any>(this.dataUrl, payload);
   }
 
   protected fetchAPI<T>(url: string, payload): T {
@@ -191,6 +191,8 @@ export class Client {
     cache.put(this.tokenId, token, seconds);
   }
 }
+
+export default Client;
 
 /**
  * Interfaces and Types declarations
