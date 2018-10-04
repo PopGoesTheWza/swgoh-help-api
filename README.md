@@ -31,6 +31,10 @@ function Test() {
 }
 ```
 
+## Documentation
+
+[TypeDoc documentation](https://popgoesthewza.github.io/swgoh-help-api/)
+
 ## Promotion
 
 This client is powered by ![alt text](https://www.swgoh.help/img/logo.png "swgoh.help").
