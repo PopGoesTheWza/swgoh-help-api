@@ -7,7 +7,6 @@
     // only emit .d.ts
     "emitDeclarationOnly": true,
     "declaration": true,
-    // "declarationDir": "dist/@types/swgoh_help_api",
     
     "noEmitOnError": true,
     "outDir": "dist",
