@@ -4,7 +4,7 @@
     "files.autoSave": "onFocusChange",
     "tsimporter.doubleQuotes": false,
     "tsimporter.spaceBetweenBraces": true,
-    "tsimporter.emitSemicolon": false,
+    "tsimporter.emitSemicolon": true,
     "tsimporter.preferRelative": true,
 
     "typescriptHero.imports.disableImportSorting": false,
