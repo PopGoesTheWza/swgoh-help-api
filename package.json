@@ -1,6 +1,6 @@
 {
   "name": "gas-swgoh-help-api",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "SWGoH.help API client for GAS",
   "author": {
     "name": "Guillaume Contesso",
@@ -9,9 +9,11 @@
   },
   "homepage": "https://discord.gg/ywzJEaQ",
   "license": "MIT",
-  "main": "dist/Code.ts",
+  "main": "index.d.ts",
   "scripts": {
-    "upload": "clasp push"
+    "build": "tsc",
+    "upload": "clasp push",
+    "document": "typedoc src/index.ts --out docs/ --mode file --ignoreCompilerErrors --name \"SWGoH.help API client for GAS\" --readme none --theme minimal && touch docs/.nojekyll"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "keywords": [
     "google-apps-script",
     "gas",
+    "typescript",
     "star wars",
     "swgoh"
   ],
