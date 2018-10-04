@@ -11,7 +11,7 @@
  * - client.fetchUnits(payload: UnitsRequest): UnitsResponse
  * - client.fetchEvents(payload: EventsRequest): EventsResponse
  * - client.fetchBattles(payload: BattlesRequest): BattlesResponse
- * - client.fetchData(payload: DataRequest): DataResponse
+ * - client.fetchData(payload: <DataRequest>): <DataResponse>
  */
 export declare class Client {
     private readonly settings;
@@ -43,7 +43,7 @@ export declare class Client {
     /** Fetch Battles data */
     fetchBattles(payload: BattlesRequest): BattlesResponse;
     /** Fetch Data data */
-    fetchData(payload: DataRequest): AbilityListResponse;
+    fetchData(payload: any): any;
     protected fetchAPI<T>(url: string, payload: any): T;
     /**
      * Retrieve the API session token from Google CacheService.
@@ -60,11 +60,12 @@ export declare class Client {
      */
     private setToken;
 }
+export default Client;
 /**
  * Interfaces and Types declarations
  */
 /** Settings for creating a new Client */
-export declare type Settings = {
+export interface Settings {
     readonly username: string;
     readonly password: string;
     readonly client_id?: string;
@@ -72,7 +73,7 @@ export declare type Settings = {
     readonly protocol?: string;
     readonly host?: string;
     readonly port?: string;
-};
+}
 /** Supported languages */
 export declare enum Languages {
     chs_cn = "chs_cn",
@@ -197,7 +198,7 @@ declare type PlayerOptions = {
     arena?: boolean;
 };
 /** Response from PlayerRequest */
-export declare type PlayerResponse = {
+export interface PlayerResponse {
     allycode?: number;
     name?: string;
     level?: number;
@@ -210,7 +211,7 @@ export declare type PlayerResponse = {
         char: Arena[];
         ship: Arena[];
     };
-};
+}
 /** Optional projection of GuildResponse properties (first layer) you want returned */
 declare type GuildOptions = {
     name?: boolean;
@@ -237,6 +238,26 @@ export interface GuildRequest extends CommonRequest {
     mods?: boolean;
     project?: GuildOptions;
 }
+/** Response from GuildRequest */
+export interface GuildResponse {
+    updated?: number;
+    id: string;
+    roster?: PlayerResponse[];
+    name?: string;
+    desc?: string;
+    members?: number;
+    status?: number;
+    required?: number;
+    bannerColor?: string;
+    bannerLogo?: string;
+    message?: string;
+    gp?: number;
+    raid?: {
+        aat: string;
+        rancor: string;
+        sith_raid: string;
+    };
+}
 /** Optional projection of UnitsdResponse properties (first layer) you want returned */
 declare type UnitsOptions = {
     player?: boolean;
@@ -258,6 +279,10 @@ export interface UnitsRequest extends CommonRequest {
     mods?: boolean;
     project?: UnitsOptions;
 }
+/** Response from UnitsRequest */
+export interface UnitsResponse {
+    [key: string]: UnitsInstance[];
+}
 /** Optional projection of EventsdResponse properties (first layer) you want returned */
 declare type EventsOptions = {
     id?: boolean;
@@ -273,6 +298,18 @@ declare type EventsOptions = {
 export interface EventsRequest extends CommonRequest {
     project?: EventsOptions;
 }
+/** Response from EventsRequest */
+export interface EventsResponse {
+    updated: number;
+    id?: string;
+    priority?: number;
+    nameKey?: string;
+    summaryKey?: string;
+    descKey?: string;
+    instances?: EventsInstance[];
+    squadType?: number;
+    defensiveSquad?: number;
+}
 /** Optional projection of BattlesResponse properties (first layer) you want returned */
 declare type BattlesOptions = {
     id?: boolean;
@@ -284,6 +321,15 @@ declare type BattlesOptions = {
 /** Request interface for /swgoh/battles endpoint */
 export interface BattlesRequest extends CommonRequest {
     project?: BattlesOptions;
+}
+/** Response from BattlesRequest */
+export interface BattlesResponse {
+    updated: number;
+    id?: string;
+    nameKey?: string;
+    descriptionKey?: string;
+    campaignType?: number;
+    campaignMapList?: CampaignMap[];
 }
 /** Supported collections with /swgoh/data endpoint */
 export declare enum Collections {
@@ -333,26 +379,46 @@ export interface AbilityListRequest extends DataRequest {
     match?: AbilityListMatch;
     project?: AbilityListOptions;
 }
-/** Response from GuildRequest */
-export declare type GuildResponse = {
-    updated?: number;
-    id: string;
-    roster?: PlayerResponse[];
-    name?: string;
-    desc?: string;
-    members?: number;
-    status?: number;
-    required?: number;
-    bannerColor?: string;
-    bannerLogo?: string;
-    message?: string;
-    gp?: number;
-    raid?: {
-        aat: string;
-        rancor: string;
-        sith_raid: string;
+export interface AbilityListResponse {
+    _id: string;
+    id?: string;
+    nameKey?: string;
+    descKey?: string;
+    prefabName?: string;
+    triggerConditionList?: {
+        conditionType: number;
+        conditionValue: string;
+    }[];
+    stackingLineOverride?: string;
+    tierList?: Tier[];
+    cooldown?: number;
+    icon?: string;
+    applyTypeTooltipKey?: string;
+    descriptiveTagList?: {
+        tag: string;
+    }[];
+    effectReferenceList?: EffectReference[];
+    confirmationMessage?: {
+        titleKey: string;
+        descKey: string;
     };
-};
+    buttonLocation?: number;
+    shortDescKey?: string;
+    abilityType?: number;
+    detailLocation?: number;
+    allyTargetingRuleId?: string;
+    useAsReinforcementDesc?: boolean;
+    preferredAllyTargetingRuleId?: string;
+    interactsWithTagList?: {
+        tag: string;
+    }[];
+    subIcon?: string;
+    aiParams?: AiParams;
+    cooldownType?: number;
+    alwaysDisplayInBattleUi?: boolean;
+    highlightWhenReadyInBattleUi?: boolean;
+    hideCooldownDescription?: boolean;
+}
 /** Response from UnitsRequest */
 declare type UnitsInstance = {
     updated?: number;
@@ -367,10 +433,6 @@ declare type UnitsInstance = {
     type?: number;
     mods?: ModInstance[];
 };
-/** Response from UnitsRequest */
-export declare type UnitsResponse = {
-    [key: string]: UnitsInstance[];
-};
 /** Event instance properties */
 export declare type EventsInstance = {
     startTime: number;
@@ -378,18 +440,6 @@ export declare type EventsInstance = {
     displayStartTime: number;
     displayEndTime: number;
     rewardTime: number;
-};
-/** Response from EventsRequest */
-export declare type EventsResponse = {
-    updated: number;
-    id?: string;
-    priority?: number;
-    nameKey?: string;
-    summaryKey?: string;
-    descKey?: string;
-    instances?: EventsInstance[];
-    squadType?: number;
-    defensiveSquad?: number;
 };
 declare type BaseItem = {
     id: string;
@@ -432,22 +482,13 @@ declare type CampaignNodeDifficultyGroup = {
     unlockRequirementLocalizationKey: string;
 };
 /** CampaignMap properties */
-export declare type CampaignMap = {
+declare type CampaignMap = {
     id: string;
     campaignNodeDifficultyGroupList: CampaignNodeDifficultyGroup[];
     entryOwnershipRequirementList: {
         id: string;
     }[];
     unlockRequirementLocalizationKey: string;
-};
-/** Response from BattlesRequest */
-export declare type BattlesResponse = {
-    updated: number;
-    id?: string;
-    nameKey?: string;
-    descriptionKey?: string;
-    campaignType?: number;
-    campaignMapList?: CampaignMap[];
 };
 export declare type EffectReference = {
     id: string;
@@ -469,70 +510,3 @@ export declare type AiParams = {
     requireEnemyPreferredTargets: boolean;
     requireAllyTargets: boolean;
 };
-export declare type AbilityListResponse = {
-    _id: string;
-    id?: string;
-    nameKey?: string;
-    descKey?: string;
-    prefabName?: string;
-    triggerConditionList?: {
-        conditionType: number;
-        conditionValue: string;
-    }[];
-    stackingLineOverride?: string;
-    tierList?: Tier[];
-    cooldown?: number;
-    icon?: string;
-    applyTypeTooltipKey?: string;
-    descriptiveTagList?: {
-        tag: string;
-    }[];
-    effectReferenceList?: EffectReference[];
-    confirmationMessage?: {
-        titleKey: string;
-        descKey: string;
-    };
-    buttonLocation?: number;
-    shortDescKey?: string;
-    abilityType?: number;
-    detailLocation?: number;
-    allyTargetingRuleId?: string;
-    useAsReinforcementDesc?: boolean;
-    preferredAllyTargetingRuleId?: string;
-    interactsWithTagList?: {
-        tag: string;
-    }[];
-    subIcon?: string;
-    aiParams?: AiParams;
-    cooldownType?: number;
-    alwaysDisplayInBattleUi?: boolean;
-    highlightWhenReadyInBattleUi?: boolean;
-    hideCooldownDescription?: boolean;
-};
-export declare type BattleEnvironmentsListResponse = {
-    _id: string;
-    prefab?: string;
-    audioPackageList?: any[];
-};
-export declare type BattleTargetingRuleList = {
-    _id: string;
-};
-export interface ActiveEffectTagCriteriaList {
-    tag: string;
-    exclude: string;
-}
-export interface RootObject {
-    unitSelect: number;
-    battleSide: number;
-    unitClassList: number[];
-    forceAlignmentList: any[];
-    category?: any;
-    healthState: number;
-    statValueList: any[];
-    activeEffectTagCriteriaList: ActiveEffectTagCriteriaList[];
-    battleDeploymentState: number;
-    id: string;
-    excludeSelf?: boolean;
-    excludeSelectedTarget?: boolean;
-}
-export {};
