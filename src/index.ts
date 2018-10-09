@@ -1,7 +1,4 @@
-/**
- * SWGoH.help API client for Google Apps Script (GAS).
- * @preferred
- */
+/** SWGoH.help API client for Google Apps Script (GAS) */
 
 /**
  * SWGoH.help API client class.
@@ -15,20 +12,27 @@
  * - client.fetchData(payload: <DataRequest>): <DataResponse>
  */
 export class Client {
+  /** Sealed copy of the Client instance Settings */
   private readonly settings: Settings;
+  /** URL to the login endpoint */
   private readonly signinUrl: string;
+  /** URL to the player endpoint */
   private readonly playerUrl: string;
+  /** URL to the guild endpoint */
   private readonly guildUrl: string;
+  /** URL to the units endpoint */
   private readonly unitsUrl: string;
+  /** URL to the events endpoint */
   private readonly eventsUrl: string;
+  /** URL to the battles endpoint */
   private readonly battlesUrl: string;
+  /** URL to the data endpoint */
   private readonly dataUrl: string;
 
+  /** token key is a SHA256 digest of the credentials used to access the API */
   private readonly tokenId: string;
 
-  /**
-   * Creates a SWGoH.help API client.
-   */
+  /** Creates a SWGoH.help API client. */
   public constructor(settings: Settings) {
     /** seal and save settings */
     this.settings = Object.seal(settings);
@@ -83,7 +87,6 @@ export class Client {
       this.setToken(token.access_token);
       // using getters and setters conflicts with online script debugger
       // this.token = token.access_token
-      // unmanaged: token.expires_in
     } else {
       throw new Error(`Login failed with HTTP status [${response.getResponseCode()}]`);
     }
@@ -126,8 +129,11 @@ export class Client {
     return this.fetchAPI<BattlesResponse>(this.battlesUrl, payload);
   }
 
-  /** Fetch Data data */
-  public fetchData(payload: any): any {
+  /**
+   * Fetch Data data
+   * @returns The structure of the response depends on the collection used.
+   */
+  public fetchData(payload: DataRequest): any {
     // TODO proper interface
     return this.fetchAPI<any>(this.dataUrl, payload);
   }
@@ -153,17 +159,17 @@ export class Client {
     throw new Error(`Failed failed with HTTP status [${response.getResponseCode()}]`);
   }
 
-  // using getters and setters conflicts with online script debugger
+  // // using getters and setters conflicts with online script debugger
   // private get token() {
-  //   const cache = CacheService.getScriptCache()
-  //   const token = cache.get(this.tokenId) || this.login()
-  //   return token
+  //   const cache = CacheService.getScriptCache();
+  //   const token = cache.get(this.tokenId) || this.login();
+  //   return token;
   // }
 
   // using getters and setters conflicts with online script debugger
   // private set token(token: string) {
-  //   const cache = CacheService.getScriptCache()
-  //   cache.put(this.tokenId, token, 3600)
+  //   const cache = CacheService.getScriptCache();
+  //   cache.put(this.tokenId, token, 3600);
   // }
 
   /**
@@ -194,40 +200,72 @@ export class Client {
 
 export default Client;
 
-/**
- * Interfaces and Types declarations
- */
+/** Interfaces and Types declarations */
 
 /** Settings for creating a new Client */
 export interface Settings {
+  /** Registered username for swgoh.help API */
   readonly username: string;
+  /** Registered password for swgoh.help API */
   readonly password: string;
+  /** currently unused */
   readonly client_id?: string;
+  /** currently unused */
   readonly client_secret?: string;
+  /** default to 'https' */
   readonly protocol?: string;
+  /** default to 'api.swgoh.help' */
   readonly host?: string;
+  /** default to '' (80) */
   readonly port?: string;
 }
 
 /** Response from successful login */
 type LoginResponse = {
   access_token: string;
+  /** unmanaged */
   expires_in: string;
 };
 
-/** Supported languages */
+/** Supported languages for localized data */
 export enum Languages {
-  chs_cn = 'chs_cn', cht_cn = 'cht_cn', eng_us = 'eng_us', fre_fr = 'fre_fr', ger_de = 'ger_de',
-  ind_id = 'ind_id', ita_it = 'ita_it', jpn_jp = 'jpn_jp', kor_kr = 'kor_kr', por_br = 'por_br',
-  rus_ru = 'rus_ru', spa_xm = 'spa_xm', tha_th = 'tha_th', tur_tr = 'tur_tr',
+  /** Chinese (Simplified) */
+  chs_cn = 'chs_cn',
+  /** Chinese (Traditional) */
+  cht_cn = 'cht_cn',
+  /** English (USA) */
+  eng_us = 'eng_us',
+  /** French (France) */
+  fre_fr = 'fre_fr',
+  /** German (Germany) */
+  ger_de = 'ger_de',
+  /** Indonesian (Indonesia) */
+  ind_id = 'ind_id',
+  /** Italian (italy) */
+  ita_it = 'ita_it',
+  /** Japanese (Japan) */
+  jpn_jp = 'jpn_jp',
+  /** Korean (South Korea) */
+  kor_kr = 'kor_kr',
+  /** Portugese (Brazil) */
+  por_br = 'por_br',
+  /** Russian (Russia) */
+  rus_ru = 'rus_ru',
+  /** Spanish? (???) */
+  spa_xm = 'spa_xm',
+  /** Thai (Thailand) */
+  tha_th = 'tha_th',
+  /** Turkish (Turkey) */
+  tur_tr = 'tur_tr',
 }
 
 /** Sub-types from Responses */
 
 /** Player stats */
-type Stats = {
+type PlayerStats = {
   nameKey: string,
   value: number,
+  /** can be used as key */
   index: number,
 };
 
@@ -317,7 +355,7 @@ type CommonRequest = {
   /**
    * Optional language to return translated names
    * If no language specified, no translations will be applied
-   * */
+   */
   language?: Languages;
   /** Optionally return enumerated items as their string equivalents */
   enums?: boolean;
@@ -350,7 +388,7 @@ export interface PlayerResponse {
   guildname?: string;
   updated?: number;
   guildRefId?: string;
-  stats?: Stats[];
+  stats?: PlayerStats[];
   roster?: Roster[];
   arena?: {
     char: Arena[],
