@@ -398,6 +398,7 @@ export interface PlayerResponse {
 
 /** Optional projection of GuildResponse properties (first layer) you want returned */
 type GuildOptions = {
+  id?: boolean,
   name?: boolean;
   desc?: boolean;
   members?: boolean;
@@ -428,7 +429,7 @@ export interface GuildRequest extends CommonRequest {
 export interface GuildResponse {
   updated?: number;
   id: string;
-  roster?: PlayerResponse[];
+  roster?: PlayerResponse[] | UnitsResponse;
   name?: string;
   desc?: string;
   members?: number;
