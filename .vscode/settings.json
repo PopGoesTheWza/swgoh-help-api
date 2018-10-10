@@ -7,7 +7,7 @@
     "tsimporter.emitSemicolon": true,
     "tsimporter.preferRelative": true,
 
-    "typescriptHero.imports.disableImportSorting": false,
+    "typescriptHero.imports.disableImportsSorting": false,
     "typescriptHero.imports.disableImportRemovalOnOrganize": false,
     "typescriptHero.imports.insertSpaceBeforeAndAfterImportBraces": true,
     "typescriptHero.imports.insertSemicolons": false,
