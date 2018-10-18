@@ -1,7 +1,4 @@
-/**
- * SWGoH.help API client for Google Apps Script (GAS).
- * @preferred
- */
+/** SWGoH.help API client for Google Apps Script (GAS) */
 /**
  * SWGoH.help API client class.
  *
@@ -14,18 +11,31 @@
  * - client.fetchData(payload: <DataRequest>): <DataResponse>
  */
 export declare class Client {
+    /** Sealed copy of the Client instance Settings */
     private readonly settings;
+    /** URL to the login endpoint */
     private readonly signinUrl;
-    private readonly playerUrl;
-    private readonly guildUrl;
+    /** URL to the player endpoint */
+    private readonly playersUrl;
+    /** URL to the guild endpoint */
+    private readonly guildsUrl;
+    /** URL to the units endpoint */
     private readonly unitsUrl;
+    /** URL to the events endpoint */
     private readonly eventsUrl;
+    /** URL to the battles endpoint */
     private readonly battlesUrl;
+    /** URL to the data endpoint */
     private readonly dataUrl;
+    /** URL to the zetas endpoint */
+    private readonly zetasUrl;
+    /** URL to the squads endpoint */
+    private readonly squadsUrl;
+    /** URL to the roster endpoint */
+    private readonly rosterUrl;
+    /** token key is a SHA256 digest of the credentials used to access the API */
     private readonly tokenId;
-    /**
-     * Creates a SWGoH.help API client.
-     */
+    /** Creates a SWGoH.help API client. */
     constructor(settings: Settings);
     /**
      * Attempts to log into the SWGoH.help API.
@@ -42,8 +52,17 @@ export declare class Client {
     fetchEvents(payload: EventsRequest): EventsResponse;
     /** Fetch Battles data */
     fetchBattles(payload: BattlesRequest): BattlesResponse;
-    /** Fetch Data data */
-    fetchData(payload: any): any;
+    /**
+     * Fetch Data data
+     * @returns The structure of the response depends on the collection used.
+     */
+    fetchData(payload: DataRequest): any;
+    /** Fetch Zetas data */
+    fetchZetas(payload: any): any;
+    /** Fetch Squads data */
+    fetchSquads(payload: any): any;
+    /** Fetch Roster data */
+    fetchRoster(payload: any): any;
     protected fetchAPI<T>(url: string, payload: any): T;
     /**
      * Retrieve the API session token from Google CacheService.
@@ -61,41 +80,61 @@ export declare class Client {
     private setToken;
 }
 export default Client;
-/**
- * Interfaces and Types declarations
- */
+/** Interfaces and Types declarations */
 /** Settings for creating a new Client */
 export interface Settings {
+    /** Registered username for swgoh.help API */
     readonly username: string;
+    /** Registered password for swgoh.help API */
     readonly password: string;
+    /** currently unused */
     readonly client_id?: string;
+    /** currently unused */
     readonly client_secret?: string;
+    /** default to 'https' */
     readonly protocol?: string;
+    /** default to 'api.swgoh.help' */
     readonly host?: string;
+    /** default to '' (80) */
     readonly port?: string;
 }
-/** Supported languages */
+/** Supported languages for localized data */
 export declare enum Languages {
+    /** Chinese (Simplified) */
     chs_cn = "chs_cn",
+    /** Chinese (Traditional) */
     cht_cn = "cht_cn",
+    /** English (USA) */
     eng_us = "eng_us",
+    /** French (France) */
     fre_fr = "fre_fr",
+    /** German (Germany) */
     ger_de = "ger_de",
+    /** Indonesian (Indonesia) */
     ind_id = "ind_id",
+    /** Italian (italy) */
     ita_it = "ita_it",
+    /** Japanese (Japan) */
     jpn_jp = "jpn_jp",
+    /** Korean (South Korea) */
     kor_kr = "kor_kr",
+    /** Portugese (Brazil) */
     por_br = "por_br",
+    /** Russian (Russia) */
     rus_ru = "rus_ru",
+    /** Spanish? (???) */
     spa_xm = "spa_xm",
+    /** Thai (Thailand) */
     tha_th = "tha_th",
+    /** Turkish (Turkey) */
     tur_tr = "tur_tr"
 }
 /** Sub-types from Responses */
 /** Player stats */
-declare type Stats = {
+declare type PlayerStats = {
     nameKey: string;
     value: number;
+    /** can be used as key */
     index: number;
 };
 /** Bare Units properties */
@@ -175,7 +214,7 @@ declare type CommonRequest = {
     /**
      * Optional language to return translated names
      * If no language specified, no translations will be applied
-     * */
+     */
     language?: Languages;
     /** Optionally return enumerated items as their string equivalents */
     enums?: boolean;
@@ -205,7 +244,7 @@ export interface PlayerResponse {
     guildname?: string;
     updated?: number;
     guildRefId?: string;
-    stats?: Stats[];
+    stats?: PlayerStats[];
     roster?: Roster[];
     arena?: {
         char: Arena[];
@@ -214,6 +253,7 @@ export interface PlayerResponse {
 }
 /** Optional projection of GuildResponse properties (first layer) you want returned */
 declare type GuildOptions = {
+    id?: boolean;
     name?: boolean;
     desc?: boolean;
     members?: boolean;
@@ -242,7 +282,7 @@ export interface GuildRequest extends CommonRequest {
 export interface GuildResponse {
     updated?: number;
     id: string;
-    roster?: PlayerResponse[];
+    roster?: PlayerResponse[] | UnitsResponse;
     name?: string;
     desc?: string;
     members?: number;

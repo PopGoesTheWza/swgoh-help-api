@@ -17,9 +17,9 @@ export class Client {
   /** URL to the login endpoint */
   private readonly signinUrl: string;
   /** URL to the player endpoint */
-  private readonly playerUrl: string;
+  private readonly playersUrl: string;
   /** URL to the guild endpoint */
-  private readonly guildUrl: string;
+  private readonly guildsUrl: string;
   /** URL to the units endpoint */
   private readonly unitsUrl: string;
   /** URL to the events endpoint */
@@ -28,6 +28,12 @@ export class Client {
   private readonly battlesUrl: string;
   /** URL to the data endpoint */
   private readonly dataUrl: string;
+  /** URL to the zetas endpoint */
+  private readonly zetasUrl: string;
+  /** URL to the squads endpoint */
+  private readonly squadsUrl: string;
+  /** URL to the roster endpoint */
+  private readonly rosterUrl: string;
 
   /** token key is a SHA256 digest of the credentials used to access the API */
   private readonly tokenId: string;
@@ -45,12 +51,16 @@ export class Client {
 
     /** build endpoints */
     this.signinUrl = `${url}/auth/signin`;
-    this.playerUrl = `${url}/swgoh/player/`;
-    this.guildUrl = `${url}/swgoh/guild/`;
+
+    this.dataUrl = `${url}/swgoh/data/`;
+    this.playersUrl = `${url}/swgoh/players/`;
+    this.guildsUrl = `${url}/swgoh/guilds/`;
     this.unitsUrl = `${url}/swgoh/units/`;
     this.eventsUrl = `${url}/swgoh/events/`;
     this.battlesUrl = `${url}/swgoh/battles/`;
-    this.dataUrl = `${url}/swgoh/data/`;
+    this.zetasUrl = `${url}/swgoh/zetas/`;
+    this.squadsUrl = `${url}/swgoh/squads/`;
+    this.rosterUrl = `${url}/swgoh/roster/`;
 
     /** compute unique hash from credentials */
     this.tokenId = String(
@@ -102,12 +112,12 @@ export class Client {
       payload.allycodes = [payload.allycodes];
     }
 
-    return this.fetchAPI<PlayerResponse[]>(this.playerUrl, payload);
+    return this.fetchAPI<PlayerResponse[]>(this.playersUrl, payload);
   }
 
   /** Fetch Guild data */
   public fetchGuild(payload: GuildRequest): GuildResponse {
-    return this.fetchAPI<GuildResponse>(this.guildUrl, payload);
+    return this.fetchAPI<GuildResponse>(this.guildsUrl, payload);
   }
 
   /** Fetch Units data */
@@ -136,6 +146,24 @@ export class Client {
   public fetchData(payload: DataRequest): any {
     // TODO proper interface
     return this.fetchAPI<any>(this.dataUrl, payload);
+  }
+
+  /** Fetch Zetas data */
+  public fetchZetas(payload: any): any {
+    // TODO proper interface
+    return this.fetchAPI<any>(this.zetasUrl, payload);
+  }
+
+  /** Fetch Squads data */
+  public fetchSquads(payload: any): any {
+    // TODO proper interface
+    return this.fetchAPI<any>(this.squadsUrl, payload);
+  }
+
+  /** Fetch Roster data */
+  public fetchRoster(payload: any): any {
+    // TODO proper interface
+    return this.fetchAPI<any>(this.rosterUrl, payload);
   }
 
   protected fetchAPI<T>(url: string, payload): T {
@@ -715,15 +743,3 @@ export type AiParams = {
   requireEnemyPreferredTargets: boolean,
   requireAllyTargets: boolean,
 };
-
-// export type BattleEnvironmentsListResponse = {
-//   _id: string,
-//   prefab?: string,
-//   audioPackageList?: any[],
-// };
-
-// export type BattleTargetingRuleList = {
-//   _id: string,
-// };
-
-// export interface IDataResponse {}
