@@ -139,6 +139,7 @@ export class Client {
     return this.fetchAPI<BattlesResponse>(this.battlesUrl, payload);
   }
 
+<<<<<<< HEAD
   /**
    * Fetch Data data
    * @returns The structure of the response depends on the collection used.
@@ -164,6 +165,12 @@ export class Client {
   public fetchRoster(payload: any): any {
     // TODO proper interface
     return this.fetchAPI<any>(this.rosterUrl, payload);
+=======
+  /** Fetch Data data */
+  public fetchData(payload: any): any {
+    // TODO proper interface
+    return this.fetchAPI<any>(this.dataUrl, payload);
+>>>>>>> 4090a2710eaa58878708b222c4971f4af2d0eb1e
   }
 
   protected fetchAPI<T>(url: string, payload): T {
@@ -228,7 +235,13 @@ export class Client {
 
 export default Client;
 
+<<<<<<< HEAD
 /** Interfaces and Types declarations */
+=======
+/**
+ * Interfaces and Types declarations
+ */
+>>>>>>> 4090a2710eaa58878708b222c4971f4af2d0eb1e
 
 /** Settings for creating a new Client */
 export interface Settings {

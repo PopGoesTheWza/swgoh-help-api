@@ -80,10 +80,18 @@ export declare class Client {
     private setToken;
 }
 export default Client;
+<<<<<<< HEAD
 /** Interfaces and Types declarations */
 /** Settings for creating a new Client */
 export interface Settings {
     /** Registered username for swgoh.help API */
+=======
+/**
+ * Interfaces and Types declarations
+ */
+/** Settings for creating a new Client */
+export interface Settings {
+>>>>>>> 4090a2710eaa58878708b222c4971f4af2d0eb1e
     readonly username: string;
     /** Registered password for swgoh.help API */
     readonly password: string;
@@ -98,7 +106,11 @@ export interface Settings {
     /** default to '' (80) */
     readonly port?: string;
 }
+<<<<<<< HEAD
 /** Supported languages for localized data */
+=======
+/** Supported languages */
+>>>>>>> 4090a2710eaa58878708b222c4971f4af2d0eb1e
 export declare enum Languages {
     /** Chinese (Simplified) */
     chs_cn = "chs_cn",
@@ -282,7 +294,11 @@ export interface GuildRequest extends CommonRequest {
 export interface GuildResponse {
     updated?: number;
     id: string;
+<<<<<<< HEAD
     roster?: PlayerResponse[] | UnitsResponse;
+=======
+    roster?: PlayerResponse[];
+>>>>>>> 4090a2710eaa58878708b222c4971f4af2d0eb1e
     name?: string;
     desc?: string;
     members?: number;
