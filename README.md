@@ -1,4 +1,4 @@
-# SWGoH.help API client for GAS v1.0.2_beta
+# SWGoH.help API client for GAS v1.0.3_beta
 
 Google Apps Script client wrapper for the [SWGoH.help](https://api.swgoh.help/swgoh) API.
 
