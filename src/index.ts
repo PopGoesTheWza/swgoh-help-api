@@ -1,5 +1,8 @@
 /** SWGoH.help API client for Google Apps Script (GAS) */
 
+const VERSION = '1.0.4_beta';
+const RELEASE = `SwgohHelp API for GAS (${VERSION})`;
+
 /**
  * SWGoH.help API client class.
  *
@@ -98,7 +101,7 @@ export class Client {
       // using getters and setters conflicts with online script debugger
       // this.token = token.access_token
     } else {
-      throw new Error(`SwgohHelpApi: Login failed [HTTP status ${response.getResponseCode()}]`);
+      throw new Error(`${RELEASE}: Login failed [HTTP status ${response.getResponseCode()}]`);
     }
 
     return this.getToken();
@@ -185,16 +188,16 @@ export class Client {
       try {
         const json = JSON.parse(response.getContentText());
         if (json.error) {
-          throw new Error(`SwgohHelpApi: Fetch failed with error [${json.code} ${json.error}]
+          throw new Error(`${RELEASE}: Fetch failed with error [${json.code} ${json.error}]
 [${json.error_description}]`);
         }
 
         return json;
       } catch {
-        throw new Error('SwgohHelpApi: Fetch failed [invalid JSON response]');
+        throw new Error(`${RELEASE}: Fetch failed [invalid JSON response]`);
       }
     }
-    throw new Error(`SwgohHelpApi: Fetch failed [HTTP status ${response.getResponseCode()}]`);
+    throw new Error(`${RELEASE}: Fetch failed [HTTP status ${response.getResponseCode()}]`);
   }
 
   // // using getters and setters conflicts with online script debugger

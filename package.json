@@ -1,7 +1,7 @@
 {
   "name": "gas-swgoh-help-api",
-  "version": "1.0.2",
-  "description": "SWGoH.help API client for GAS",
+  "version": "1.0.4_beta",
+  "description": "SwgohHelp API for GAS",
   "author": {
     "name": "Guillaume Contesso",
     "email": "popgoesthewza@gmail.com",
