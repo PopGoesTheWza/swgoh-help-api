@@ -98,7 +98,7 @@ export class Client {
       // using getters and setters conflicts with online script debugger
       // this.token = token.access_token
     } else {
-      throw new Error(`Login failed with HTTP status [${response.getResponseCode()}]`);
+      throw new Error(`SwgohHelpApi: Login failed [HTTP status ${response.getResponseCode()}]`);
     }
 
     return this.getToken();
@@ -182,9 +182,19 @@ export class Client {
     const response = UrlFetchApp.fetch(url, params);
 
     if (response.getResponseCode() === 200) {
-      return JSON.parse(response.getContentText());
+      try {
+        const json = JSON.parse(response.getContentText());
+        if (json.error) {
+          throw new Error(`SwgohHelpApi: Fetch failed with error [${json.code} ${json.error}]
+[${json.error_description}]`);
+        }
+
+        return json;
+      } catch {
+        throw new Error('SwgohHelpApi: Fetch failed [invalid JSON response]');
+      }
     }
-    throw new Error(`Failed failed with HTTP status [${response.getResponseCode()}]`);
+    throw new Error(`SwgohHelpApi: Fetch failed [HTTP status ${response.getResponseCode()}]`);
   }
 
   // // using getters and setters conflicts with online script debugger
