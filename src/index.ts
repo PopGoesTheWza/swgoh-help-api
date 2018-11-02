@@ -76,7 +76,7 @@ export class Client {
 
   /**
    * Attempts to log into the SWGoH.help API.
-   * @returns A SWGoH.help API session token
+   * returns A SWGoH.help API session token
    */
   public login(): string {
     const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
@@ -144,7 +144,7 @@ export class Client {
 
   /**
    * Fetch Data data
-   * @returns The structure of the response depends on the collection used.
+   * returns The structure of the response depends on the collection used.
    */
   public fetchData(payload: DataRequest): any {
     // TODO proper interface

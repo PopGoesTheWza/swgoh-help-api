@@ -39,7 +39,7 @@ export declare class Client {
     constructor(settings: Settings);
     /**
      * Attempts to log into the SWGoH.help API.
-     * @returns A SWGoH.help API session token
+     * returns A SWGoH.help API session token
      */
     login(): string;
     /** Fetch Player data */
@@ -54,7 +54,7 @@ export declare class Client {
     fetchBattles(payload: BattlesRequest): BattlesResponse;
     /**
      * Fetch Data data
-     * @returns The structure of the response depends on the collection used.
+     * returns The structure of the response depends on the collection used.
      */
     fetchData(payload: DataRequest): any;
     /** Fetch Zetas data */
