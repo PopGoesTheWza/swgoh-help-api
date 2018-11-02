@@ -26,9 +26,10 @@
     "star wars",
     "swgoh"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@google/clasp": "^1.6.3"
+  },
   "devDependencies": {
-    "@google/clasp": "^1.6.0",
     "@types/google-apps-script": "0.0.27",
     "gas-lib": "^2.0.2",
     "prettier": "^1.14.3",
