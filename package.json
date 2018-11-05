@@ -1,6 +1,6 @@
 {
   "name": "gas-swgoh-help-api",
-  "version": "1.0.4_beta",
+  "version": "1.0.4",
   "description": "SwgohHelp API for GAS",
   "author": {
     "name": "Guillaume Contesso",
