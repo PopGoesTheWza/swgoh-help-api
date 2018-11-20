@@ -194,7 +194,7 @@ export class Client {
           .split(',')
           .map((e: string) => e.trim());
 
-        throw new Error(`${RELEASE}: SwgohHelp API failed with waning(s) [${code}]
+        throw new Error(`${RELEASE}: SwgohHelp API issued warning(s) [${code}]
 [${warnings.join('\n')}]`);
       }
 
@@ -211,8 +211,11 @@ export class Client {
       }
 
       return json;
-    } catch {
-      throw new Error(`${RELEASE}: Google UrlFetchApp API failed`);
+    } catch (e) {
+      if (e instanceof Error) {
+        throw e;
+      }
+      throw new Error(`${RELEASE}: Unknown error`);
     }
   }
 
