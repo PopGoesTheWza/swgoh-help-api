@@ -1,6 +1,6 @@
 /** SWGoH.help API client for Google Apps Script (GAS) */
 
-const VERSION = '1.0.4_beta';
+const VERSION = '1.0.5_beta';
 const RELEASE = `SwgohHelp API for GAS (${VERSION})`;
 
 /**
@@ -170,6 +170,8 @@ export class Client {
   }
 
   protected fetchAPI<T>(url: string, payload): T {
+
+    let response: GoogleAppsScript.URL_Fetch.HTTPResponse;
     const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
       contentType: 'application/json',
       headers: {
@@ -182,22 +184,27 @@ export class Client {
       /** we'll handle errors ourselves */
       muteHttpExceptions: true,
     };
-    const response = UrlFetchApp.fetch(url, params);
 
-    if (response.getResponseCode() === 200) {
+    try {
+      response = UrlFetchApp.fetch(url, params);
+      const code = response.getResponseCode();
+
+      let json;
       try {
-        const json = JSON.parse(response.getContentText());
-        if (json.error) {
-          throw new Error(`${RELEASE}: Fetch failed with error [${json.code} ${json.error}]
-[${json.error_description}]`);
-        }
-
-        return json;
+        json = JSON.parse(response.getContentText());
       } catch {
-        throw new Error(`${RELEASE}: Fetch failed [invalid JSON response]`);
+        throw new Error(`${RELEASE}: SwgohHelp API failed with parsing error [${code}]`);
       }
+
+      if (code !== 200 || json.error) {
+        throw new Error(`${RELEASE}: SwgohHelp API failed with error [${json.code} ${json.error}]
+[${json.error_description}]`);
+      }
+
+      return json;
+    } catch {
+      throw new Error(`${RELEASE}: Google UrlFetchApp API failed`);
     }
-    throw new Error(`${RELEASE}: Fetch failed [HTTP status ${response.getResponseCode()}]`);
   }
 
   // // using getters and setters conflicts with online script debugger
