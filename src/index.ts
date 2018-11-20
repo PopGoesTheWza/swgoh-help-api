@@ -188,6 +188,15 @@ export class Client {
     try {
       response = UrlFetchApp.fetch(url, params);
       const code = response.getResponseCode();
+      const headers = response.getHeaders();
+      if (headers.hasOwnProperty('warning')) {
+        const warnings: string[] = headers['warning']
+          .split(',')
+          .map((e: string) => e.trim());
+
+        throw new Error(`${RELEASE}: SwgohHelp API failed with waning(s) [${code}]
+[${warnings.join('\n')}]`);
+      }
 
       let json;
       try {
