@@ -119,8 +119,8 @@ export class Client {
   }
 
   /** Fetch Guild data */
-  public fetchGuild(payload: GuildRequest): GuildResponse {
-    return this.fetchAPI<GuildResponse>(this.guildsUrl, payload);
+  public fetchGuild(payload: GuildRequest): GuildResponse[] {
+    return this.fetchAPI<GuildResponse[]>(this.guildsUrl, payload);
   }
 
   /** Fetch Units data */
@@ -333,7 +333,7 @@ type PlayerStats = {
 type BaseUnit = {
   id: string,
   defId: string,
-  type: number,
+  // type: number,
 };
 
 /** Equipped properties for Roster units */
@@ -391,13 +391,20 @@ type Crew = {
   gp: number,
 };
 
+export enum COMBAT_TYPE {
+  HERO = 1,
+  SHIP = 2,
+}
+
 /** Roster properties */
 interface Roster extends BaseUnit {
+  nameKey: string;
   rarity: number;
   level: number;
   xp: number;
   gear: number;
   equipped: Equipped[];
+  combatType: COMBAT_TYPE;
   skills: Skills[];
   mods: Mod[];
   crew: Crew[];
@@ -434,18 +441,24 @@ type PlayerOptions = {
   name?: boolean;
   level?: boolean;
   guildName?: boolean;
+  gp?: boolean;
+  gpChar?: boolean;
+  gpShip?: boolean;
   updated?: boolean;
   stats?: boolean;
-  roster?: boolean;
+  roster?: any;  // boolean;
   arena?: boolean;
 };
 
 /** Response from PlayerRequest */
 export interface PlayerResponse {
-  allycode?: number;
+  allyCode?: number;
   name?: string;
   level?: number;
   guildname?: string;
+  gp?: number;
+  gpChar?: number;
+  gpShip?: number;
   updated?: number;
   guildRefId?: string;
   stats?: PlayerStats[];
@@ -469,7 +482,7 @@ type GuildOptions = {
   message?: boolean;
   gp?: boolean;
   raid?: boolean;
-  roster?: boolean;
+  roster?: any;  // boolean;
   updated?: boolean;
 };
 

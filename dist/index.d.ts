@@ -45,7 +45,7 @@ export declare class Client {
     /** Fetch Player data */
     fetchPlayer(payload: PlayerRequest): PlayerResponse[];
     /** Fetch Guild data */
-    fetchGuild(payload: GuildRequest): GuildResponse;
+    fetchGuild(payload: GuildRequest): GuildResponse[];
     /** Fetch Units data */
     fetchUnits(payload: UnitsRequest): UnitsResponse;
     /** Fetch Events data */
@@ -141,7 +141,6 @@ declare type PlayerStats = {
 declare type BaseUnit = {
     id: string;
     defId: string;
-    type: number;
 };
 /** Equipped properties for Roster units */
 declare type Equipped = {
@@ -192,13 +191,19 @@ declare type Crew = {
     cp: number;
     gp: number;
 };
+export declare enum COMBAT_TYPE {
+    HERO = 1,
+    SHIP = 2
+}
 /** Roster properties */
 interface Roster extends BaseUnit {
+    nameKey: string;
     rarity: number;
     level: number;
     xp: number;
     gear: number;
     equipped: Equipped[];
+    combatType: COMBAT_TYPE;
     skills: Skills[];
     mods: Mod[];
     crew: Crew[];
@@ -231,17 +236,23 @@ declare type PlayerOptions = {
     name?: boolean;
     level?: boolean;
     guildName?: boolean;
+    gp?: boolean;
+    gpChar?: boolean;
+    gpShip?: boolean;
     updated?: boolean;
     stats?: boolean;
-    roster?: boolean;
+    roster?: any;
     arena?: boolean;
 };
 /** Response from PlayerRequest */
 export interface PlayerResponse {
-    allycode?: number;
+    allyCode?: number;
     name?: string;
     level?: number;
     guildname?: string;
+    gp?: number;
+    gpChar?: number;
+    gpShip?: number;
     updated?: number;
     guildRefId?: string;
     stats?: PlayerStats[];
@@ -264,7 +275,7 @@ declare type GuildOptions = {
     message?: boolean;
     gp?: boolean;
     raid?: boolean;
-    roster?: boolean;
+    roster?: any;
     updated?: boolean;
 };
 /** Request interface for /swgoh/guild endpoint */
