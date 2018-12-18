@@ -20,6 +20,8 @@ export class Client {
   /** URL to the login endpoint */
   private readonly signinUrl: string;
   /** URL to the player endpoint */
+  private readonly endpointUrl: (string) => string;
+  /** URL to the player endpoint */
   private readonly playersUrl: string;
   /** URL to the guild endpoint */
   private readonly guildsUrl: string;
@@ -55,6 +57,7 @@ export class Client {
     /** build endpoints */
     this.signinUrl = `${url}/auth/signin`;
 
+    this.endpointUrl = (e: string) => `${url}/swgoh/${e}/`;
     this.dataUrl = `${url}/swgoh/data/`;
     this.playersUrl = `${url}/swgoh/players/`;
     this.guildsUrl = `${url}/swgoh/guilds/`;
@@ -64,6 +67,13 @@ export class Client {
     this.zetasUrl = `${url}/swgoh/zetas/`;
     this.squadsUrl = `${url}/swgoh/squads/`;
     this.rosterUrl = `${url}/swgoh/roster/`;
+
+    // this.statsUrl = settings.statsUrl
+    //   || 'https://crinolo-swgoh.glitch.me/baseStats/api/';
+    // this.charStatsApi = settings.charStatsApi
+    //   || 'https://crinolo-swgoh.glitch.me/statCalc/api/characters';
+    // this.shipStatsApi = settings.shipStatsApi
+    //   || 'https://crinolo-swgoh.glitch.me/statCalc/api/ships';
 
     /** compute unique hash from credentials */
     this.tokenId = String(
@@ -107,6 +117,11 @@ export class Client {
     return this.getToken();
     // using getters and setters conflicts with online script debugger
     // return this.token
+  }
+
+  /** unspecified fetch */
+  public fetch(endpoint: string, payload: any): any {
+    return this.fetchAPI<any>(this.endpointUrl(endpoint), payload);
   }
 
   /** Fetch Player data */
@@ -346,6 +361,7 @@ type Equipped = {
 type Skills = {
   id: string,
   tier: number,
+  nameKey: string,
   isZeta: boolean,
 };
 
