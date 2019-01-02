@@ -35,6 +35,7 @@
     "eslint": "^5.11.1",
     "prettier": "^1.15.3",
     "tslint": "^5.12.0",
-    "tslint-config-airbnb": "^5.11.1"
+    "tslint-config-airbnb": "^5.11.1",
+    "typedoc": "^0.13.0"
   }
 }
