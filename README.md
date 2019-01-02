@@ -1,4 +1,4 @@
-# SWGoH.help API client for GAS v1.0.5_beta
+# SWGoH.help API client for GAS v1.0.5_beta [![clasp](https://img.shields.io/badge/built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
 
 Google Apps Script client wrapper for the [SWGoH.help](https://api.swgoh.help/swgoh) API.
 
