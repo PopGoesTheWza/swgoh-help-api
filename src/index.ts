@@ -3,6 +3,8 @@
 const VERSION = '1.0.5_beta';
 const RELEASE = `SwgohHelp API for GAS (${VERSION})`;
 
+import URL_Fetch = GoogleAppsScript.URL_Fetch;
+
 /**
  * SWGoH.help API client class.
  *
@@ -89,7 +91,7 @@ export class Client {
    * returns A SWGoH.help API session token
    */
   public login(): string {
-    const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+    const params: URL_Fetch.URLFetchRequestOptions = {
       contentType: 'application/x-www-form-urlencoded',
       method: 'post',
       payload: {
@@ -186,8 +188,8 @@ export class Client {
 
   protected fetchAPI<T>(url: string, payload): T {
 
-    let response: GoogleAppsScript.URL_Fetch.HTTPResponse;
-    const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+    let response: URL_Fetch.HTTPResponse;
+    const params: URL_Fetch.URLFetchRequestOptions = {
       contentType: 'application/json',
       headers: {
         Authorization: `Bearer ${this.getToken()}`,
