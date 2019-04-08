@@ -1,8 +1,8 @@
 {
   // list all files to process for .d.ts declarations
-  "files": [
-    "src/index.ts",
-  ],
+  // "files": [
+  //   "src/index.ts"
+  // ],
   "compilerOptions": {
     // only emit .d.ts
     "emitDeclarationOnly": true,
@@ -22,7 +22,11 @@
     "module": "es2015",  // Note: "none" in ts2gas
     "moduleResolution": "node",
   },
+  // "include": ["src/**/*.ts"],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ],
+  "include": [
+    "src/**/*"
+  ]
 }
