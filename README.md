@@ -7,9 +7,11 @@ For API access and support, please visit us on [Discord](https://discord.gg/kau4
 ## Getting Started
 
 Within your Google document:
+
 1. open  the menu `Resources` and select the option `Libraries...`
 1. add the library by using this script ID `1bMXMdwJmhTBxb4tBMEyEtw3jPVTzMZQz6NZ9Wm5-5b2MPWWFfqJVGa6n` and selecting the latest version
 1. use the following snippet for simple testing:
+
 ```javascript
 function Test() {
   // Fill in with your swgoh.help API credentials
@@ -46,12 +48,19 @@ Consider donating to its [Patreon](https://www.patreon.com/user?u=470177).
 ## Build your own copy
 
 Prerequisite:
+
 - Have [Google Clasp CLI](https://developers.google.com/apps-script/guides/clasp) installed
 - (Recommended) setup your [TypeScript](https://developers.google.com/apps-script/guides/typescript) IDE
 
+```shell
+npm install -g @google/clasp typescript
+```
+
 Steps:
-1. Make a local copy of the GitHub repository
-1. Edit the file `.clasp.json` with the scriptId of your own new Google script
+
+1. Make a local copy of the GitHub repository.
+1. run the command `yarn install`
+1. Edit the file `.clasp.json` with the scriptId of your own copy of the Territory Battles spreadsheet
 1. If needed, edit the source `.ts` files under the `src/` directory
 1. Use Clasp CLI to push the transpiled TypeScript into your Google script
 1. (Optional) issue a Pull Request for your changes to be added to the official release
