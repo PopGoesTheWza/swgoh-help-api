@@ -15,7 +15,7 @@ function client_(): Client {
 }
 
 /** Sample invokation of the /swgoh/player endpoint */
-function test_fetchPlayer(): void {
+function test_fetchPlayer() {
   const allycode = 213176142;
   const allycodes = [allycode, 524173817];
   let request: PlayerRequest;
@@ -30,7 +30,7 @@ function test_fetchPlayer(): void {
       updated: true,
     },
   };
-  json = client.fetchPlayer(request);
+  client.fetchPlayer(request);
 
   request = {
     allycodes, // array of allycodes
@@ -42,12 +42,14 @@ function test_fetchPlayer(): void {
   };
   json = client.fetchPlayer(request);
   debugger;
+
+  return json;
 }
 
 /** Sample invokation of the /swgoh/guild endpoint */
-function test_fetchGuild(): void {
+function test_fetchGuild() {
   const allycode = 213176142;
-  let json: GuildResponse;
+  let json: GuildResponse[];
   const client = client_();
 
   json = client.fetchGuild({
@@ -55,10 +57,12 @@ function test_fetchGuild(): void {
     language: Languages.eng_us,
   });
   debugger;
+
+  return json;
 }
 
 /** Sample invokation of the /swgoh/units endpoint */
-function test_fetchUnits(): void {
+function test_fetchUnits() {
   const allycode = 213176142;
   let json: UnitsResponse;
   const client = client_();
@@ -68,10 +72,12 @@ function test_fetchUnits(): void {
     language: Languages.eng_us,
   });
   debugger;
+
+  return json;
 }
 
 /** Sample invokation of the /swgoh/events endpoint */
-function test_fetchEvents(): void {
+function test_fetchEvents() {
   let json: EventsResponse;
   const client = client_();
 
@@ -79,10 +85,12 @@ function test_fetchEvents(): void {
     language: Languages.eng_us,
   });
   debugger;
+
+  return json;
 }
 
 /** Sample invokation of the /swgoh/battles endpoint */
-function test_fetchBattles(): void {
+function test_fetchBattles() {
   let json: BattlesResponse;
   const client = client_();
 
@@ -90,6 +98,8 @@ function test_fetchBattles(): void {
     language: Languages.eng_us,
   });
   debugger;
+
+  return json;
 }
 
 /** Sample invokation of the /swgoh/data endpoint */

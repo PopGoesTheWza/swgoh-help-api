@@ -136,7 +136,7 @@ export class Client {
   }
 
   /** Fetch Guild data */
-  public fetchGuild(payload: GuildRequest): GuildResponse[] {
+  public fetchGuild(payload: GuildRequest) {
     return this.fetchAPI<GuildResponse[]>(this.guildsUrl, payload);
   }
 
