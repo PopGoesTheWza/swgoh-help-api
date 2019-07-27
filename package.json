@@ -34,6 +34,6 @@
     "@types/google-apps-script": "^0.0.54",
     "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typedoc": "^0.15.0-0"
+    "typedoc": "^0.15.0"
   }
 }
