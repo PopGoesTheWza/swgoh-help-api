@@ -1,4 +1,11 @@
 {
-  // Use AirBnB coding style
-  "extends": "tslint-config-airbnb"
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "rules": {
+    "prettier": true,
+    "interface-name":false,
+    "no-namespace":false
+  },
+  "jsRules": {},
+  "rulesDirectory": ["tslint-plugin-prettier"]
 }

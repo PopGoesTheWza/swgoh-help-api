@@ -1,16 +1,18 @@
 {
-  // list all files to process for .d.ts declarations
-  // "files": [
-  //   "src/index.ts"
-  // ],
+  "compileOnSave": true,
   "compilerOptions": {
-    // only emit .d.ts
-    "emitDeclarationOnly": true,
-    "declaration": true,
-    
-    "noEmitOnError": true,
-    "outDir": "dist",
+    // "declaration": true,
 
+    // "strict": true,
+
+    // "strictBindCallApply": false,
+    // "strictFunctionTypes": false,
+    // "strictNullChecks": false,
+    // "strictPropertyInitialization": false,
+    // "stripInternal": false,
+    // "suppressExcessPropertyErrors": false,
+    // "suppressImplicitAnyIndexErrors": true,
+    
     // adapted from https://github.com/grant/ts2gas/blob/master/index.js
     "lib": ["es2015"],
     "target": "ES3",
@@ -18,9 +20,12 @@
     "noLib": false,  // Note: true in ts2gas
     "experimentalDecorators": true,
     "noResolve": false,  // Note: true in ts2gas
-    "pretty": true,
     "module": "es2015",  // Note: "none" in ts2gas
     "moduleResolution": "node",
+
+    "noEmitOnError": true,
+    "outDir": "dist",
+    "pretty": true,
   },
   // "include": ["src/**/*.ts"],
   "exclude": [
