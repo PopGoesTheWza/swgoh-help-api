@@ -1,5 +1,18 @@
-// tslint:disable-next-line:max-line-length
-import { BattlesResponse, Client, Collections, EventsResponse, GuildResponse, Languages, PlayerRequest, PlayerResponse, Settings, UnitsResponse } from './index';
+// tslint:disable: no-debugger
+// tslint:disable: object-literal-sort-keys
+
+import {
+  BattlesResponse,
+  Client,
+  Collections,
+  EventsResponse,
+  GuildResponse,
+  Languages,
+  PlayerRequest,
+  PlayerResponse,
+  Settings,
+  UnitsResponse,
+} from './index';
 
 /**
  * Helper function to instanciate a swgoh.help API client

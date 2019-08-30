@@ -1,3 +1,6 @@
+// tslint:disable: no-empty-interface
+// tslint:disable: object-literal-sort-keys
+
 /** SWGoH.help API client for Google Apps Script (GAS) */
 
 const VERSION = '1.0.5_beta';
@@ -22,7 +25,7 @@ export class Client {
   /** URL to the login endpoint */
   private readonly signinUrl: string;
   /** URL to the player endpoint */
-  private readonly endpointUrl: (string) => string;
+  private readonly endpointUrl: (someString) => string;
   /** URL to the player endpoint */
   private readonly playersUrl: string;
   /** URL to the guild endpoint */
@@ -79,10 +82,7 @@ export class Client {
 
     /** compute unique hash from credentials */
     this.tokenId = String(
-      Utilities.computeDigest(
-        Utilities.DigestAlgorithm.SHA_256,
-        `${this.settings.username}${this.settings.password}`,
-      ),
+      Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, `${this.settings.username}${this.settings.password}`),
     );
   }
 
@@ -187,7 +187,6 @@ export class Client {
   }
 
   protected fetchAPI<T>(url: string, payload): T {
-
     let response: URL_Fetch.HTTPResponse;
     const params: URL_Fetch.URLFetchRequestOptions = {
       contentType: 'application/json',
@@ -205,11 +204,9 @@ export class Client {
     try {
       response = UrlFetchApp.fetch(url, params);
       const code = response.getResponseCode();
-      const headers = response.getHeaders();
+      const headers = response.getHeaders() as any;
       if (headers.hasOwnProperty('warning')) {
-        const warnings: string[] = headers['warning']
-          .split(',')
-          .map((e: string) => e.trim());
+        const warnings: string[] = headers.warning.split(',').map((e: string) => e.trim());
 
         throw new Error(`${RELEASE}: SwgohHelp API issued warning(s) [${code}]
 [${warnings.join('\n')}]`);
@@ -298,11 +295,11 @@ export interface Settings {
 }
 
 /** Response from successful login */
-type LoginResponse = {
+interface LoginResponse {
   access_token: string;
   /** unmanaged */
   expires_in: string;
-};
+}
 
 /** Supported languages for localized data */
 export enum Languages {
@@ -339,42 +336,42 @@ export enum Languages {
 /** Sub-types from Responses */
 
 /** Player stats */
-type PlayerStats = {
-  nameKey: string,
-  value: number,
+interface PlayerStats {
+  nameKey: string;
+  value: number;
   /** can be used as key */
-  index: number,
-};
+  index: number;
+}
 
 /** Bare Units properties */
-type BaseUnit = {
-  id: string,
-  defId: string,
+interface BaseUnit {
+  id: string;
+  defId: string;
   // type: number,
-};
+}
 
 /** Equipped properties for Roster units */
-type Equipped = {
-  equipmentId: string,
-  slot: number,
-};
+interface Equipped {
+  equipmentId: string;
+  slot: number;
+}
 
 /** Skills properties for Roster units */
-type Skills = {
-  id: string,
-  tier: number,
-  nameKey: string,
-  isZeta: boolean,
-};
+interface Skills {
+  id: string;
+  tier: number;
+  nameKey: string;
+  isZeta: boolean;
+}
 
 /** Bare Mod properties */
-type BaseMod = {
-  id: string,
-  set: number,
-  level: number,
-  pips: number,
-  tier: number,
-};
+interface BaseMod {
+  id: string;
+  set: number;
+  level: number;
+  pips: number;
+  tier: number;
+}
 
 /** Mod properties */
 interface Mod extends BaseMod {
@@ -397,17 +394,17 @@ interface Mod extends BaseMod {
 
 /** Mod properties */
 interface ModInstance extends BaseMod {
-  stat: [number, (string | number), number][];
+  stat: Array<[number, (string | number), number]>;
 }
 
 /** Crew properties */
-type Crew = {
-  unitId: string,
-  slot: number,
-  skillReferenceList: string[],
-  cp: number,
-  gp: number,
-};
+interface Crew {
+  unitId: string;
+  slot: number;
+  skillReferenceList: string[];
+  cp: number;
+  gp: number;
+}
 
 export enum COMBAT_TYPE {
   HERO = 1,
@@ -430,13 +427,13 @@ interface Roster extends BaseUnit {
 }
 
 /** Arena properties */
-type Arena = {
-  rank: number,
-  squad: BaseUnit[],
-};
+interface Arena {
+  rank: number;
+  squad: BaseUnit[];
+}
 
 /** Common properties for all Request interfaces */
-type CommonRequest = {
+interface CommonRequest {
   /**
    * Optional language to return translated names
    * If no language specified, no translations will be applied
@@ -444,7 +441,7 @@ type CommonRequest = {
   language?: Languages;
   /** Optionally return enumerated items as their string equivalents */
   enums?: boolean;
-};
+}
 
 /** Request interface for /swgoh/player endpoint */
 export interface PlayerRequest extends CommonRequest {
@@ -454,7 +451,7 @@ export interface PlayerRequest extends CommonRequest {
 }
 
 /** Optional projection of PlayerResponse properties (first layer) you want returned */
-type PlayerOptions = {
+interface PlayerOptions {
   allyCode?: boolean;
   name?: boolean;
   level?: boolean;
@@ -464,9 +461,9 @@ type PlayerOptions = {
   gpShip?: boolean;
   updated?: boolean;
   stats?: boolean;
-  roster?: any;  // boolean;
+  roster?: any; // boolean;
   arena?: boolean;
-};
+}
 
 /** Response from PlayerRequest */
 export interface PlayerResponse {
@@ -482,14 +479,14 @@ export interface PlayerResponse {
   stats?: PlayerStats[];
   roster?: Roster[];
   arena?: {
-    char: Arena[],
-    ship: Arena[],
+    char: Arena[];
+    ship: Arena[];
   };
 }
 
 /** Optional projection of GuildResponse properties (first layer) you want returned */
-type GuildOptions = {
-  id?: boolean,
+interface GuildOptions {
+  id?: boolean;
   name?: boolean;
   desc?: boolean;
   members?: boolean;
@@ -500,9 +497,9 @@ type GuildOptions = {
   message?: boolean;
   gp?: boolean;
   raid?: boolean;
-  roster?: any;  // boolean;
+  roster?: any; // boolean;
   updated?: boolean;
-};
+}
 
 /** Request interface for /swgoh/guild endpoint */
 export interface GuildRequest extends CommonRequest {
@@ -531,14 +528,14 @@ export interface GuildResponse {
   message?: string;
   gp?: number;
   raid?: {
-    aat: string,
-    rancor: string,
-    sith_raid: string,
+    aat: string;
+    rancor: string;
+    sith_raid: string;
   };
 }
 
 /** Optional projection of UnitsdResponse properties (first layer) you want returned */
-type UnitsOptions = {
+interface UnitsOptions {
   player?: boolean;
   allyCode?: boolean;
   starLevel?: boolean;
@@ -550,7 +547,7 @@ type UnitsOptions = {
   mods?: boolean;
   gp?: boolean;
   updated?: boolean;
-};
+}
 
 /** Request interface for /swgoh/units endpoint */
 export interface UnitsRequest extends CommonRequest {
@@ -566,7 +563,7 @@ export interface UnitsResponse {
 }
 
 /** Optional projection of EventsdResponse properties (first layer) you want returned */
-type EventsOptions = {
+interface EventsOptions {
   id?: boolean;
   priority?: boolean;
   nameKey?: boolean;
@@ -575,7 +572,7 @@ type EventsOptions = {
   instances?: boolean;
   squadType?: boolean;
   defensiveSquadType?: boolean;
-};
+}
 
 /** Request interface for /swgoh/events endpoint */
 export interface EventsRequest extends CommonRequest {
@@ -596,13 +593,13 @@ export interface EventsResponse {
 }
 
 /** Optional projection of BattlesResponse properties (first layer) you want returned */
-type BattlesOptions = {
+interface BattlesOptions {
   id?: boolean;
   nameKey?: boolean;
   descriptionKey?: boolean;
   campaignType?: boolean;
   campaignMapList?: boolean;
-};
+}
 
 /** Request interface for /swgoh/battles endpoint */
 export interface BattlesRequest extends CommonRequest {
@@ -662,9 +659,9 @@ export interface DataRequest extends CommonRequest {
   project?: object;
 }
 
-type AbilityListMatch = {};
+interface AbilityListMatch {}
 
-type AbilityListOptions = {};
+interface AbilityListOptions {}
 
 /** Request interface for /swgoh/data endpoint */
 export interface AbilityListRequest extends DataRequest {
@@ -678,20 +675,20 @@ export interface AbilityListResponse {
   nameKey?: string;
   descKey?: string;
   prefabName?: string;
-  triggerConditionList?: {
-    conditionType: number,
-    conditionValue: string,
-  }[];
+  triggerConditionList?: Array<{
+    conditionType: number;
+    conditionValue: string;
+  }>;
   stackingLineOverride?: string;
   tierList?: Tier[];
   cooldown?: number;
   icon?: string;
   applyTypeTooltipKey?: string;
-  descriptiveTagList?: { tag: string }[];
+  descriptiveTagList?: Array<{ tag: string }>;
   effectReferenceList?: EffectReference[];
   confirmationMessage?: {
-    titleKey: string,
-    descKey: string,
+    titleKey: string;
+    descKey: string;
   };
   buttonLocation?: number;
   shortDescKey?: string;
@@ -700,7 +697,7 @@ export interface AbilityListResponse {
   allyTargetingRuleId?: string;
   useAsReinforcementDesc?: boolean;
   preferredAllyTargetingRuleId?: string;
-  interactsWithTagList?: { tag: string }[];
+  interactsWithTagList?: Array<{ tag: string }>;
   subIcon?: string;
   aiParams?: AiParams;
   cooldownType?: number;
@@ -710,99 +707,99 @@ export interface AbilityListResponse {
 }
 
 /** Response from UnitsRequest */
-type UnitsInstance = {
-  updated?: number,
-  player?: string,
-  allyCode?: number,
-  gp?: number,
-  starLevel?: number,
-  level?: number,
-  gearLevel?: number,
-  gear?: string[],
-  zetas?: string[],
-  type?: number,
-  mods?: ModInstance[],
-};
+interface UnitsInstance {
+  updated?: number;
+  player?: string;
+  allyCode?: number;
+  gp?: number;
+  starLevel?: number;
+  level?: number;
+  gearLevel?: number;
+  gear?: string[];
+  zetas?: string[];
+  type?: number;
+  mods?: ModInstance[];
+}
 
 /** Event instance properties */
-export type EventsInstance = {
-  startTime: number,
-  endTime: number,
-  displayStartTime: number,
-  displayEndTime: number,
-  rewardTime: number,
-};
+export interface EventsInstance {
+  startTime: number;
+  endTime: number;
+  displayStartTime: number;
+  displayEndTime: number;
+  rewardTime: number;
+}
 
-type BaseItem = {
-  id: string,
-  type: number,
-  weight: number,
-  minQuantity: number,
-  maxQuantity: number,
-  rarity: number,
-  statMod: undefined, // ???
-};
+interface BaseItem {
+  id: string;
+  type: number;
+  weight: number;
+  minQuantity: number;
+  maxQuantity: number;
+  rarity: number;
+  statMod: undefined; // ???
+}
 
-type EnemyUnit = {
-  baseEnemyItem: BaseItem,
-  enemyLevel: number,
-  enemyTier: number,
-  threatLevel: number,
-  thumbnailName: string,
-  prefabName: string,
-  displayedEnemy: boolean,
-  unitClass: number,
-};
+interface EnemyUnit {
+  baseEnemyItem: BaseItem;
+  enemyLevel: number;
+  enemyTier: number;
+  threatLevel: number;
+  thumbnailName: string;
+  prefabName: string;
+  displayedEnemy: boolean;
+  unitClass: number;
+}
 
-type CampaignNodeMission = {
-  id: string,
-  nameKey: string,
-  descKey: string,
-  combatType: number,
-  rewardPreviewList: BaseItem[], // ???
-  shortNameKey: string,
-  groupNameKey: string,
-  firstCompleteRewardPreviewList: BaseItem[],
-  enemyUnitPreviewList: EnemyUnit[],
-};
+interface CampaignNodeMission {
+  id: string;
+  nameKey: string;
+  descKey: string;
+  combatType: number;
+  rewardPreviewList: BaseItem[]; // ???
+  shortNameKey: string;
+  groupNameKey: string;
+  firstCompleteRewardPreviewList: BaseItem[];
+  enemyUnitPreviewList: EnemyUnit[];
+}
 
-type CampaignNode = {
-  id: string,
-  nameKey: string,
-  campaignNodeMissionList: CampaignNodeMission[],
-};
+interface CampaignNode {
+  id: string;
+  nameKey: string;
+  campaignNodeMissionList: CampaignNodeMission[];
+}
 
-type CampaignNodeDifficultyGroup = {
-  campaignNodeDifficulty: number,
-  campaignNodeList: CampaignNode,
-  unlockRequirementLocalizationKey: string,
-};
+interface CampaignNodeDifficultyGroup {
+  campaignNodeDifficulty: number;
+  campaignNodeList: CampaignNode;
+  unlockRequirementLocalizationKey: string;
+}
 
 /** CampaignMap properties */
-type CampaignMap = {
-  id: string,
-  campaignNodeDifficultyGroupList: CampaignNodeDifficultyGroup[],
-  entryOwnershipRequirementList: { id: string }[],
-  unlockRequirementLocalizationKey: string,
-};
+interface CampaignMap {
+  id: string;
+  campaignNodeDifficultyGroupList: CampaignNodeDifficultyGroup[];
+  entryOwnershipRequirementList: Array<{ id: string }>;
+  unlockRequirementLocalizationKey: string;
+}
 
-export type EffectReference = {
-  id: string,
-  contextIndexList: number[], // ???
-  maxBonusMove: number,
-};
+export interface EffectReference {
+  id: string;
+  contextIndexList: number[]; // ???
+  maxBonusMove: number;
+}
 
-export type Tier = {
-  descKey: string,
-  upgradeDescKey: string,
-  cooldownMaxOverride: number,
-  effectReferenceList: EffectReference[],
-  interactsWithTagList: { tag: string }[], // to be confirmed
-};
+export interface Tier {
+  descKey: string;
+  upgradeDescKey: string;
+  cooldownMaxOverride: number;
+  effectReferenceList: EffectReference[];
+  interactsWithTagList: Array<{ tag: string }>; // to be confirmed
+}
 
-export type AiParams = {
-  preferredTargetAllyTargetingRuleId: string,
-  preferredEnemyTargetingRuleId: string,
-  requireEnemyPreferredTargets: boolean,
-  requireAllyTargets: boolean,
-};
+export interface AiParams {
+  preferredTargetAllyTargetingRuleId: string;
+  preferredEnemyTargetingRuleId: string;
+  requireEnemyPreferredTargets: boolean;
+  requireAllyTargets: boolean;
+}
