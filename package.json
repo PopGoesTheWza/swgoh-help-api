@@ -12,6 +12,8 @@
   "main": "index.d.ts",
   "scripts": {
     "build": "tsc",
+    "format": "prettier --write src/**.ts src/**.json",
+    "lint": "tslint --project ./tsconfig.json",
     "upload": "clasp push",
     "document": "typedoc src/index.ts --out docs/ --mode file --ignoreCompilerErrors --name \"SWGoH.help API client for GAS\" --readme none --theme minimal && touch docs/.nojekyll"
   },
@@ -27,13 +29,16 @@
     "swgoh"
   ],
   "dependencies": {
-    "@google/clasp": "^2.2.1",
-    "typescript": "^3.5.3"
+    "@google/clasp": "^2.2.1"
   },
   "devDependencies": {
-    "@types/google-apps-script": "^0.0.54",
-    "tslint": "^5.18.0",
+    "@types/google-apps-script": "^0.0.58",
+    "prettier": "^1.18.2",
+    "tslint": "^5.19.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typedoc": "^0.15.0"
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typedoc": "^0.15.0",
+    "typescript": "^3.6.2"
   }
 }
